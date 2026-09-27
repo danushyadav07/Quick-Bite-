@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBite Food | Gourmet Restaurant Food Delivery (Zomato & Swiggy Style)</title>
+  <meta name="description" content="QuickBite Food - Order piping hot restaurant meals, biryani, pizzas, burgers, North Indian curries & desserts with live tracking and AI support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Dedicated Food Portal Theme Highlights */
+    :root {
+      --portal-brand: var(--food-primary);
+      --portal-gradient: var(--food-gradient);
+      --portal-light: var(--food-light);
+      --portal-border: var(--food-border);
+    }
+    .portal-banner {
+      background: radial-gradient(circle at top right, #431407 0%, #1E1B4B 50%, #0F172A 100%);
+      border: 1px solid rgba(255, 82, 0, 0.25);
+    }
+    .switch-portal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #ECFDF5;
+      border: 1.5px solid #10B981;
+      border-radius: var(--radius-full);
+      color: #065F46;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+    }
+    .switch-portal-badge:hover {
+      background: #10B981;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+  </style>
+</head>
+<body data-page="food">
+  <!-- Top Announcement Bar -->
+  <aside class="top-announcement" aria-label="Offers banner">
+    <div class="announcement-content">
+      <span class="badge-flash" style="background:#FF5200; color:#FFFFFF;">🍲 FOOD SPECIAL</span>
+      <span class="announcement-text">Craving Gourmet Meals? Get <strong>50% OFF</strong> up to ₹100! Use code <strong class="promo-pill">QUICK50</strong></span>
+      <div class="announcement-extras">
+        <a href="grocery.html" class="switch-portal-badge">
+          <span>Need 10-Min Groceries?</span>
+          <span>Switch to Blinkit Mart ⚡</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navigation Header -->
+  <header class="main-header" id="mainHeader">
+    <div class="header-container">
+      <!-- Logo & Tagline -->
+      <div class="logo-group">
+        <a href="index.html" class="brand-logo" id="brandLogo">
+          <div class="brand-icon" style="background: var(--food-gradient);">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Quick<span class="highlight">Food</span></span>
+            <span class="brand-sub" style="color:var(--food-primary);">Zomato &amp; Swiggy Dining</span>
+          </div>
+        </a>
+
+        <!-- Location Selector -->
+        <button class="location-selector" id="locationBtn" aria-label="Change delivery location">
+          <span class="loc-pin">📍</span>
+          <div class="loc-details">
+            <span class="loc-title">Deliver to: <strong id="currentLocationName">Home - Cyber City</strong></span>
+            <span class="loc-subtitle">Tower 4, Sector 28, Gurugram</span>
+          </div>
+          <span class="chevron-down">▼</span>
+        </button>
+      </div>
+
+      <!-- SuperApp Portal Switcher -->
+      <nav class="mode-switcher-container" aria-label="Dedicated Portals Switcher">
+        <div class="mode-pill-track">
+          <a href="food.html" class="mode-pill active" style="text-decoration: none;">
+            <span class="mode-icon">🍔</span>
+            <span class="mode-label">Food Delivery</span>
+            <span class="mode-badge">Active</span>
+          </a>
+          <a href="grocery.html" class="mode-pill" style="text-decoration: none;">
+            <span class="mode-icon">⚡</span>
+            <span class="mode-label">10-Min Groceries</span>
+            <span class="mode-badge grocery-badge">Blinkit</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Search, Account & Cart -->
+      <div class="header-actions">
+        <div class="search-bar-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search biryani, pizza, burger, thali..." aria-label="Search food">
+          <button class="clear-search-btn" id="clearSearchBtn" aria-label="Clear search" style="display: none;">✕</button>
+        </div>
+
+        <button class="header-btn ai-help-header-btn" id="headerAiHelpBtn" title="Ask QuickBot AI Support">
+          <span class="bot-sparkle">✨</span>
+          <span class="btn-text">Food AI Help</span>
+        </button>
+
+        <button class="header-btn cart-btn" id="cartToggleBtn" aria-label="Open Food Cart">
+          <div class="cart-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-badge" id="cartCountBadge">0</span>
+          </div>
+          <div class="cart-info">
+            <span class="cart-txt">Cart</span>
+            <span class="cart-amount" id="cartTotalHeader">₹0</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <main id="mainContent">
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="promo-banner-card portal-banner">
+          <div class="promo-content">
+            <div class="promo-tag" style="background: rgba(255, 82, 0, 0.2); color: #FED7AA; border-color: #FF5200;">
+              🍲 ZOMATO &amp; SWIGGY RESTAURANT SPECIALS
+            </div>
+            <h1 class="hero-heading">Piping Hot Gourmet Dishes Delivered to Your Table</h1>
+            <p class="hero-subtext">Authentic dum biryanis, wood-fired cheesy pizzas, juicy grilled burgers, and decadent desserts from top chefs.</p>
+            <div class="hero-cta-group">
+              <a href="#foodCatalog" class="btn btn-primary">Explore Food Dishes 🍲</a>
+              <a href="grocery.html" class="btn btn-emerald">Switch to 10-Min Groceries ⚡</a>
+            </div>
+          </div>
+          <div class="promo-visual">
+            <div class="floating-badge badge-1" style="background: rgba(255, 82, 0, 0.9);">
+              <span>🔥 50% OFF up to ₹100</span>
+            </div>
+            <div class="floating-badge badge-2">
+              <span>⭐ 4.8+ Top Rated</span>
+            </div>
+            <div class="floating-badge badge-3">
+              <span>🚀 20-30 Mins Express</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=80" alt="Gourmet Dining Food Dishes" class="hero-img">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Food Cuisines Categories -->
+    <section class="categories-section" aria-label="Food Cuisines">
+      <div class="section-container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Inspiration for your dining cravings</h2>
+            <p class="section-subtitle">Pick your favorite cuisine</p>
+          </div>
+          <div class="filter-controls">
+            <button class="pill-filter active" data-category="all">All Cuisines</button>
+            <button class="pill-filter" id="vegOnlyFilter" data-filter="veg">
+              <span class="veg-dot"></span> Pure Veg
+            </button>
+            <button class="pill-filter" id="expressFilter" data-filter="express">
+              ⚡ Under 25 mins
+            </button>
+            <button class="pill-filter" id="ratingFilter" data-filter="rating">
+              ⭐ 4.7+ Rating
+            </button>
+          </div>
+        </div>
+
+        <div class="category-carousel" id="categoryCarousel">
+          <!-- Populated via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Food Dishes Catalog -->
+    <section class="catalog-section" id="foodCatalog">
+      <div class="section-container">
+        <div class="catalog-header">
+          <div class="catalog-info">
+            <h2 class="section-title" id="catalogTitle">Top Restaurant Meals &amp; Delicacies</h2>
+            <span class="item-count-badge" id="itemCountDisplay">Loading food items...</span>
+          </div>
+          <div class="catalog-sort">
+            <label for="sortSelect">Sort by:</label>
+            <select id="sortSelect" class="styled-select">
+              <option value="popular">Most Popular</option>
+              <option value="time">Fastest Kitchen Prep</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div class="product-grid" id="productGrid">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyCatalogState" style="display: none;">
+          <div class="empty-icon">🍲</div>
+          <h3>No matching food dishes found</h3>
+          <p>Try searching for a different dish name, cuisine, or reset filters.</p>
+          <button class="btn btn-secondary" id="resetFiltersBtn">Reset Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Restaurant Hygiene Banner -->
+    <section class="features-section">
+      <div class="section-container">
+        <div class="feature-card">
+          <div class="feature-icon">🍲</div>
+          <h3>Thermal Hot-Bag Delivery</h3>
+          <p>Dishes travel in multi-layered insulated bags to arrive steaming hot at your dining table.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎛️</div>
+          <h3>Customizable Options</h3>
+          <p>Personalize portions, spice levels, crust types, extra toppings, and custom kitchen notes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>QuickBot Food AI</h3>
+          <p>Instant answers on meal status, food quality, missing gravy, or payment issues in seconds.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>FSSAI Verified Kitchens</h3>
+          <p>All partnered restaurants undergo rigorous daily hygiene, sanitization, and temperature checks.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sticky Bottom Cart Bar (Mobile) -->
+  <div class="floating-cart-bar" id="floatingCartBar" style="display: none;">
+    <div class="floating-cart-content">
+      <div class="float-details">
+        <span class="float-qty" id="floatQty">1 Meal</span>
+        <span class="float-price" id="floatPrice">₹289</span>
+      </div>
+      <button class="float-action-btn" id="floatViewCartBtn">
+        <span>View Food Cart</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Customization Options Modal (Food Portions, Spices, Add-ons, Notes) -->
+  <div class="modal-overlay" id="optionsModalOverlay" aria-hidden="true">
+    <div class="modal-container options-modal" role="dialog" aria-modal="true" aria-labelledby="modalItemTitle">
+      <button class="modal-close-btn" id="closeOptionsModalBtn" aria-label="Close modal">✕</button>
+      
+      <div class="options-header">
+        <div class="options-thumb-wrap">
+          <img src="" alt="" id="modalItemImg" class="options-item-img">
+          <span class="veg-badge-lg" id="modalVegBadge"></span>
+        </div>
+        <div class="options-summary">
+          <span class="options-category-tag" id="modalItemCategory">Restaurant Food</span>
+          <h3 id="modalItemTitle" class="options-title">Item Title</h3>
+          <p id="modalItemDesc" class="options-desc">Detailed ingredients and chef description.</p>
+          <div class="options-base-price">Base Price: <strong id="modalBasePrice">₹0</strong></div>
+        </div>
+      </div>
+
+      <div class="options-scroll-body" id="optionsBody">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="options-footer">
+        <div class="options-total-wrapper">
+          <span class="total-label">Meal Total:</span>
+          <span class="total-amount" id="modalCalculatedTotal">₹0</span>
+        </div>
+        <div class="options-cta-group">
+          <div class="quantity-stepper">
+            <button class="step-btn" id="modalQtyMinus">-</button>
+            <span class="step-qty" id="modalQty">1</span>
+            <button class="step-btn" id="modalQtyPlus">+</button>
+          </div>
+          <button class="btn btn-primary btn-add-cart-final" id="modalAddToCartFinalBtn">
+            <span>Add to Cart</span>
+            <span id="modalBtnPrice">₹0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="drawer-overlay" id="cartDrawerOverlay" aria-hidden="true">
+    <aside class="cart-drawer" role="dialog" aria-label="Food Cart">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <h2>Food Order Cart</h2>
+          <span class="drawer-count-badge" id="drawerItemCount">0 meals</span>
+        </div>
+        <button class="drawer-close-btn" id="closeCartDrawerBtn" aria-label="Close cart">✕</button>
+      </div>
+
+      <div class="delivery-time-callout" id="cartDeliveryCallout" style="background:#FFF4EE; border-color:#FED7AA;">
+        <span class="speed-icon">🍲</span>
+        <div class="callout-text">
+          <strong style="color:var(--food-primary);">Delivering Hot in <span id="cartEstimatedTime">25-30 mins</span></strong>
+          <span>Direct from restaurant kitchen to your doorstep</span>
+        </div>
+      </div>
+
+      <div class="cart-items-container" id="cartItemsList"></div>
+
+      <div class="empty-cart-state" id="emptyCartView" style="display: none;">
+        <div class="empty-cart-illu">🍲</div>
+        <h3>Your food cart is empty</h3>
+        <p>Explore piping hot biryanis, cheesy pizzas, or crispy burgers!</p>
+        <button class="btn btn-primary" id="startShoppingBtn">Explore Dishes</button>
+      </div>
+
+      <div class="cart-footer" id="cartFooter">
+        <div class="coupon-box">
+          <input type="text" id="couponInput" placeholder="Enter coupon (e.g. QUICK50)">
+          <button id="applyCouponBtn">Apply</button>
+        </div>
+        <div class="coupon-feedback" id="couponFeedback" style="display: none;"></div>
+
+        <div class="bill-breakdown">
+          <div class="bill-row">
+            <span>Item Total</span>
+            <span id="billItemTotal">₹0</span>
+          </div>
+          <div class="bill-row" id="discountRow" style="display: none;">
+            <span class="text-green">Promo Discount</span>
+            <span class="text-green" id="billDiscount">-₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>Delivery Partner Fee</span>
+            <span id="billDeliveryFee">₹25</span>
+          </div>
+          <div class="bill-row">
+            <span>Govt Taxes &amp; Packaging</span>
+            <span id="billTaxes">₹15</span>
+          </div>
+          <div class="bill-row total-row">
+            <strong>To Pay</strong>
+            <strong class="grand-total" id="billGrandTotal">₹0</strong>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-checkout" id="proceedCheckoutBtn">
+          <span>Proceed to Pay</span>
+          <span id="checkoutBtnAmount">₹0</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkoutModalOverlay" aria-hidden="true">
+    <div class="modal-container checkout-modal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeCheckoutModalBtn" aria-label="Close">✕</button>
+      <div class="checkout-header">
+        <h2>Confirm Food Order &amp; Pay</h2>
+        <p>Select delivery address and payment method</p>
+      </div>
+      <div class="checkout-sections">
+        <div class="checkout-card">
+          <div class="checkout-card-header">
+            <span class="icon">📍</span>
+            <h4>Delivery Address</h4>
+          </div>
+          <div class="address-preview">
+            <strong>Home (Cyber City)</strong>
+            <p>Flat 402, Block C, DLF Phase 2, Gurugram, 122002</p>
+            <span class="address-time-badge" style="background:#FFF4EE; color:var(--food-primary);">🍲 Hot Thermal Delivery Route</span>
+          </div>
+        </div>
+
+        <div class="checkout-card">
+          <div class="checkout-card-header">
+            <span class="icon">💳</span>
+            <h4>Choose Payment Method</h4>
+          </div>
+          <div class="payment-options-grid">
+            <label class="pay-option selected">
+              <input type="radio" name="paymentMethod" value="upi" checked>
+              <div class="pay-info">
+                <span class="pay-icon">📱</span>
+                <div>
+                  <strong>UPI (Google Pay, PhonePe, Paytm)</strong>
+                  <span class="pay-sub">Fastest instant confirmation</span>
+                </div>
+              </div>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="paymentMethod" value="card">
+              <div class="pay-info">
+                <span class="pay-icon">💳</span>
+                <div>
+                  <strong>Credit / Debit Card</strong>
+                  <span class="pay-sub">Visa, Mastercard, RuPay</span>
+                </div>
+              </div>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="paymentMethod" value="cod">
+              <div class="pay-info">
+                <span class="pay-icon">💵</span>
+                <div>
+                  <strong>Cash on Delivery</strong>
+                  <span class="pay-sub">Pay at doorstep</span>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="rider-tip-card">
+          <div class="tip-header">
+            <span>🛵 Support your delivery partner:</span>
+          </div>
+          <div class="tip-pills">
+            <button class="tip-pill" data-tip="0">No Tip</button>
+            <button class="tip-pill active" data-tip="20">₹20</button>
+            <button class="tip-pill" data-tip="30">₹30</button>
+            <button class="tip-pill" data-tip="50">₹50 🌟</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-footer">
+        <div class="checkout-total-calc">
+          <span>Total Payable</span>
+          <strong id="checkoutFinalAmount">₹0</strong>
+        </div>
+        <button class="btn btn-primary btn-pay-now" id="payNowBtn">
+          <span>Place Order Now</span>
+          <span class="lock-icon">🔒</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Tracking Modal -->
+  <div class="modal-overlay" id="trackingModalOverlay" aria-hidden="true">
+    <div class="modal-container tracking-modal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeTrackingModalBtn">✕</button>
+      <div class="tracking-top-bar" style="background: linear-gradient(135deg, #180903 0%, #311107 100%);">
+        <div class="pulse-indicator">
+          <span class="pulse-ring" style="border-color:#FF5200;"></span>
+          <span class="pulse-core" style="background:#FF5200;"></span>
+        </div>
+        <div>
+          <span class="order-id-txt" id="trackOrderId">Order #QB-84920</span>
+          <h3 class="track-status-heading" id="trackStatusHeading">Kitchen Cooking Your Food!</h3>
+        </div>
+        <div class="track-eta-box">
+          <span class="eta-label">Arriving in</span>
+          <span class="eta-time" id="trackEtaTimer" style="color:#FFA273;">25 mins</span>
+        </div>
+      </div>
+
+      <div class="map-simulation-container">
+        <div class="map-grid-bg"></div>
+        <div class="route-line-wrap">
+          <div class="route-path"></div>
+          <div class="rider-marker" id="riderMarker">
+            <div class="rider-avatar" style="border-color:#FF5200;">🛵</div>
+            <div class="rider-tooltip">Rahul (Delivery Partner)</div>
+          </div>
+          <div class="destination-marker">
+            <div class="dest-avatar">🏠</div>
+            <div class="dest-tooltip">Your Home</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tracking-steps">
+        <div class="step-item completed" id="step1">
+          <div class="step-circle">✓</div>
+          <div class="step-desc"><strong>Order Accepted</strong></div>
+        </div>
+        <div class="step-item active" id="step2">
+          <div class="step-circle" style="background:var(--food-primary);">🍲</div>
+          <div class="step-desc"><strong>Kitchen Cooking</strong></div>
+        </div>
+        <div class="step-item" id="step3">
+          <div class="step-circle">🛵</div>
+          <div class="step-desc"><strong>Out for Delivery</strong></div>
+        </div>
+        <div class="step-item" id="step4">
+          <div class="step-circle">🎉</div>
+          <div class="step-desc"><strong>Delivered Hot</strong></div>
+        </div>
+      </div>
+
+      <div class="rider-info-card">
+        <div class="rider-avatar-img">👨‍🍳</div>
+        <div class="rider-meta">
+          <strong>Rahul Sharma</strong>
+          <span>QuickBite Food Partner • ⭐ 4.9 (1,240+ deliveries)</span>
+          <span class="rider-tag" style="color:var(--food-primary) !important;">Carrying Thermal Insulated Bag</span>
+        </div>
+        <div class="rider-actions">
+          <button class="call-rider-btn" id="callRiderBtn">📞 Call</button>
+        </div>
+      </div>
+
+      <div class="tracking-footer">
+        <button class="btn btn-secondary" id="helpWithOrderBtn">🤖 Need Help with Meal? Ask AI</button>
+        <button class="btn btn-primary" id="trackDoneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QuickBot AI Chatbot -->
+  <div class="chatbot-wrapper">
+    <button class="chatbot-floating-trigger" id="chatbotTrigger" aria-label="Open QuickBot AI Assistant">
+      <div class="bot-badge-ring"></div>
+      <span class="bot-emoji">🤖</span>
+      <span class="bot-label">QuickBot AI</span>
+      <span class="bot-online-dot"></span>
+    </button>
+
+    <div class="chatbot-window" id="chatbotWindow" aria-hidden="true">
+      <div class="chat-header">
+        <div class="chat-bot-profile">
+          <div class="chat-bot-avatar">🤖</div>
+          <div class="chat-bot-info">
+            <h4>QuickBot AI (Food Support)</h4>
+            <span class="chat-status"><span class="status-dot"></span> Online • 24x7 Assistance</span>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <button class="chat-btn-action" id="resetChatBtn">🔄</button>
+          <button class="chat-btn-action" id="closeChatBtn">✕</button>
+        </div>
+      </div>
+
+      <div class="chat-quick-topics">
+        <span class="topic-hint">Tap for instant help:</span>
+        <div class="topic-chips-scroll">
+          <button class="topic-chip" data-query="Payment failed but money deducted">💳 Payment Issue</button>
+          <button class="topic-chip" data-query="Where is my food delivery right now?">🛵 Track Meal</button>
+          <button class="topic-chip" data-query="Food was cold or gravy missing">🍲 Food Quality Issue</button>
+          <button class="topic-chip" data-query="How to claim refund for cancelled order?">💸 Claim Refund</button>
+          <button class="topic-chip" data-query="Recommend tasty dinner food">🍕 Dish Suggestions</button>
+        </div>
+      </div>
+
+      <div class="chat-messages-container" id="chatMessages"></div>
+
+      <form class="chat-input-form" id="chatInputForm">
+        <input type="text" id="chatTextInput" placeholder="Ask about payments, food dishes, refunds, delivery..." autocomplete="off">
+        <button type="submit" class="chat-send-btn" id="chatSendBtn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Location Modal -->
+  <div class="modal-overlay" id="locationModalOverlay" aria-hidden="true">
+    <div class="modal-container location-modal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeLocationModalBtn">✕</button>
+      <h3>Select Delivery Location</h3>
+      <p class="loc-modal-sub">Choose a saved address or enter a new one</p>
+      <div class="saved-addresses-list">
+        <div class="address-card-select active" data-name="Home - Cyber City" data-sub="Tower 4, Sector 28, Gurugram">
+          <span class="icon">🏠</span>
+          <div><strong>Home</strong><p>Tower 4, Sector 28, DLF Cyber City, Gurugram</p></div>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="address-card-select" data-name="Work - WeWork Forum" data-sub="Floor 5, DLF CyberHub, Gurugram">
+          <span class="icon">💼</span>
+          <div><strong>Office / Work</strong><p>Floor 5, WeWork Forum, DLF CyberHub, Gurugram</p></div>
+          <span class="check-mark">✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

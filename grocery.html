@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBite Blinkit Mart | 10-Minute Instant Grocery Delivery</title>
+  <meta name="description" content="QuickBite Blinkit Mart - Fresh milk, farm-fresh vegetables, fruits, snacks, cold drinks and daily essentials delivered at rocket speed in 10 minutes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Dedicated Grocery Theme Styles */
+    :root {
+      --portal-brand: var(--grocery-primary);
+      --portal-gradient: var(--grocery-gradient);
+      --portal-light: var(--grocery-light);
+      --portal-border: var(--grocery-border);
+    }
+    .portal-grocery-banner {
+      background: radial-gradient(circle at top right, #064E3B 0%, #065F46 40%, #0F172A 100%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .switch-food-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #FFF4EE;
+      border: 1.5px solid #FF5200;
+      border-radius: var(--radius-full);
+      color: #C2410C;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+    }
+    .switch-food-badge:hover {
+      background: #FF5200;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 82, 0, 0.3);
+    }
+  </style>
+</head>
+<body data-page="grocery">
+  <!-- Top Announcement Bar -->
+  <aside class="top-announcement" aria-label="Offers banner" style="background: linear-gradient(90deg, #064E3B 0%, #0F172A 50%, #042F2E 100%);">
+    <div class="announcement-content">
+      <span class="badge-flash" style="background:#F7C200; color:#0F172A;">⚡ 10-MIN EXPRESS</span>
+      <span class="announcement-text">Daily Groceries Delivered in 10 Minutes! Use code <strong class="promo-pill">BLINK10</strong> for ₹50 OFF</span>
+      <div class="announcement-extras">
+        <a href="food.html" class="switch-food-badge">
+          <span>Craving Hot Restaurant Food?</span>
+          <span>Switch to Zomato Dining 🍲</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navigation Header -->
+  <header class="main-header" id="mainHeader">
+    <div class="header-container">
+      <!-- Logo & Tagline -->
+      <div class="logo-group">
+        <a href="index.html" class="brand-logo" id="brandLogo">
+          <div class="brand-icon" style="background: var(--grocery-gradient);">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Quick<span style="color:var(--grocery-primary);">Mart</span></span>
+            <span class="brand-sub" style="color:var(--grocery-primary);">10-Minute Blinkit Groceries</span>
+          </div>
+        </a>
+
+        <!-- Location Selector -->
+        <button class="location-selector" id="locationBtn" aria-label="Change delivery location">
+          <span class="loc-pin">📍</span>
+          <div class="loc-details">
+            <span class="loc-title">Deliver to: <strong id="currentLocationName">Home - Cyber City</strong></span>
+            <span class="loc-subtitle">Tower 4, Sector 28, Gurugram</span>
+          </div>
+          <span class="chevron-down">▼</span>
+        </button>
+      </div>
+
+      <!-- SuperApp Portal Switcher -->
+      <nav class="mode-switcher-container" aria-label="Dedicated Portals Switcher">
+        <div class="mode-pill-track">
+          <a href="food.html" class="mode-pill" style="text-decoration: none;">
+            <span class="mode-icon">🍔</span>
+            <span class="mode-label">Food Delivery</span>
+            <span class="mode-badge">Zomato</span>
+          </a>
+          <a href="grocery.html" class="mode-pill active" style="text-decoration: none; color:var(--grocery-primary);">
+            <span class="mode-icon">⚡</span>
+            <span class="mode-label">10-Min Groceries</span>
+            <span class="mode-badge grocery-badge">Active</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Search, Account & Cart -->
+      <div class="header-actions">
+        <div class="search-bar-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search milk, bread, veggies, chips, coke..." aria-label="Search groceries">
+          <button class="clear-search-btn" id="clearSearchBtn" aria-label="Clear search" style="display: none;">✕</button>
+        </div>
+
+        <button class="header-btn ai-help-header-btn" id="headerAiHelpBtn" title="Ask QuickBot AI Support">
+          <span class="bot-sparkle">✨</span>
+          <span class="btn-text">Grocery AI Help</span>
+        </button>
+
+        <button class="header-btn cart-btn" id="cartToggleBtn" aria-label="Open Grocery Cart" style="background:#064E3B; border-color:#065F46;">
+          <div class="cart-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-badge" id="cartCountBadge" style="background:var(--grocery-primary);">0</span>
+          </div>
+          <div class="cart-info">
+            <span class="cart-txt">Mart Cart</span>
+            <span class="cart-amount" id="cartTotalHeader">₹0</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <main id="mainContent">
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="promo-banner-card portal-grocery-banner">
+          <div class="promo-content">
+            <div class="promo-tag" style="background: rgba(16, 185, 129, 0.2); color: #A7F3D0; border-color: #10B981;">
+              ⚡ BLINKIT SPEED • DARK STORE EXPRESS
+            </div>
+            <h1 class="hero-heading">Fresh Groceries &amp; Daily Essentials Packed in 10 Mins</h1>
+            <p class="hero-subtext">Farm-fresh tomatoes, chilled milk, fresh curd, crunchy chips, and cold drinks from our neighborhood dark store.</p>
+            <div class="hero-cta-group">
+              <a href="#groceryCatalog" class="btn btn-emerald">Shop 10-Min Groceries ⚡</a>
+              <a href="food.html" class="btn btn-primary">Switch to Restaurant Food 🍲</a>
+            </div>
+          </div>
+          <div class="promo-visual">
+            <div class="floating-badge badge-1" style="background: rgba(12, 131, 31, 0.95);">
+              <span>⚡ 10 Mins Delivery</span>
+            </div>
+            <div class="floating-badge badge-2">
+              <span>🥑 100% Farm Fresh</span>
+            </div>
+            <div class="floating-badge badge-3" style="background: #F59E0B; color:#0F172A;">
+              <span>💸 Flat ₹50 OFF</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" alt="Fresh Groceries in 10 Minutes" class="hero-img">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grocery Aisles Categories -->
+    <section class="categories-section" aria-label="Grocery Aisles">
+      <div class="section-container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Shop by Grocery Aisles</h2>
+            <p class="section-subtitle">Stock your kitchen essentials in minutes</p>
+          </div>
+          <div class="filter-controls">
+            <button class="pill-filter active" data-category="all">All Aisles</button>
+            <button class="pill-filter" id="vegOnlyFilter" data-filter="veg">
+              <span class="veg-dot"></span> Pure Veg
+            </button>
+            <button class="pill-filter" id="expressFilter" data-filter="express">
+              ⚡ 10-Min Express
+            </button>
+            <button class="pill-filter" id="ratingFilter" data-filter="rating">
+              ⭐ 4.8+ Rating
+            </button>
+          </div>
+        </div>
+
+        <div class="category-carousel" id="categoryCarousel">
+          <!-- Populated dynamically via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Grocery Catalog -->
+    <section class="catalog-section" id="groceryCatalog">
+      <div class="section-container">
+        <div class="catalog-header">
+          <div class="catalog-info">
+            <h2 class="section-title" id="catalogTitle">Daily Essentials &amp; Fresh Mart</h2>
+            <span class="item-count-badge" id="itemCountDisplay" style="background:#ECFDF5; color:var(--grocery-primary);">Loading groceries...</span>
+          </div>
+          <div class="catalog-sort">
+            <label for="sortSelect">Sort by:</label>
+            <select id="sortSelect" class="styled-select">
+              <option value="popular">Most Popular</option>
+              <option value="time">Fastest 10m Express</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div class="product-grid" id="productGrid">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyCatalogState" style="display: none;">
+          <div class="empty-icon">⚡</div>
+          <h3>No matching groceries found</h3>
+          <p>Try searching for milk, bread, vegetables, or clear filters.</p>
+          <button class="btn btn-secondary" id="resetFiltersBtn">Reset Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10-Min Guarantee Features -->
+    <section class="features-section">
+      <div class="section-container">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>10-Minute Dark Store Network</h3>
+          <p>High-density neighborhood micro-warehouses packed with over 3,000 fresh daily items.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🥑</div>
+          <h3>Triple Quality-Checked Freshness</h3>
+          <p>Every fruit and vegetable is hand-graded, sorted, and hygiene-packed before dispatch.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>Instant QuickBot Replacement</h3>
+          <p>Any missing milk pouch or spoiled item? AI issues an instant 10-minute replacement or full refund.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧊</div>
+          <h3>Cold Chain Integrity</h3>
+          <p>Ice cream, cold drinks, curd, and milk arrive ice-chilled in specialized freezer bags.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sticky Bottom Cart Bar (Mobile) -->
+  <div class="floating-cart-bar" id="floatingCartBar" style="display: none; background:#064E3B;">
+    <div class="floating-cart-content">
+      <div class="float-details">
+        <span class="float-qty" id="floatQty">1 Grocery Item</span>
+        <span class="float-price" id="floatPrice">₹89</span>
+      </div>
+      <button class="float-action-btn" id="floatViewCartBtn" style="background:var(--grocery-gradient);">
+        <span>View Grocery Cart</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Customization Options Modal (Grocery Pack Sizes, Weights, Addons) -->
+  <div class="modal-overlay" id="optionsModalOverlay" aria-hidden="true">
+    <div class="modal-container options-modal" role="dialog" aria-modal="true" aria-labelledby="modalItemTitle">
+      <button class="modal-close-btn" id="closeOptionsModalBtn" aria-label="Close modal">✕</button>
+      
+      <div class="options-header">
+        <div class="options-thumb-wrap">
+          <img src="" alt="" id="modalItemImg" class="options-item-img">
+          <span class="veg-badge-lg" id="modalVegBadge"></span>
+        </div>
+        <div class="options-summary">
+          <span class="options-category-tag" id="modalItemCategory" style="color:var(--grocery-primary);">10-Min Grocery Mart</span>
+          <h3 id="modalItemTitle" class="options-title">Item Title</h3>
+          <p id="modalItemDesc" class="options-desc">Detailed pack weight and freshness info.</p>
+          <div class="options-base-price">Base Price: <strong id="modalBasePrice">₹0</strong></div>
+        </div>
+      </div>
+
+      <div class="options-scroll-body" id="optionsBody">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="options-footer">
+        <div class="options-total-wrapper">
+          <span class="total-label">Item Total:</span>
+          <span class="total-amount" id="modalCalculatedTotal">₹0</span>
+        </div>
+        <div class="options-cta-group">
+          <div class="quantity-stepper">
+            <button class="step-btn" id="modalQtyMinus">-</button>
+            <span class="step-qty" id="modalQty">1</span>
+            <button class="step-btn" id="modalQtyPlus">+</button>
+          </div>
+          <button class="btn btn-emerald btn-add-cart-final" id="modalAddToCartFinalBtn">
+            <span>Add to Cart</span>
+            <span id="modalBtnPrice">₹0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="drawer-overlay" id="cartDrawerOverlay" aria-hidden="true">
+    <aside class="cart-drawer" role="dialog" aria-label="Grocery Cart">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <h2>10-Min Grocery Cart</h2>
+          <span class="drawer-count-badge" id="drawerItemCount">0 items</span>
+        </div>
+        <button class="drawer-close-btn" id="closeCartDrawerBtn" aria-label="Close cart">✕</button>
+      </div>
+
+      <div class="delivery-time-callout" id="cartDeliveryCallout" style="background:#ECFDF5; border-color:#A7F3D0;">
+        <span class="speed-icon">⚡</span>
+        <div class="callout-text">
+          <strong style="color:var(--grocery-primary);">Delivering in <span id="cartEstimatedTime">10-12 mins</span></strong>
+          <span>Express neighborhood dark store delivery</span>
+        </div>
+      </div>
+
+      <div class="cart-items-container" id="cartItemsList"></div>
+
+      <div class="empty-cart-state" id="emptyCartView" style="display: none;">
+        <div class="empty-cart-illu">⚡</div>
+        <h3>Your grocery cart is empty</h3>
+        <p>Grab chilled milk, farm fresh veggies, or crunchy munchies in 10 minutes!</p>
+        <button class="btn btn-emerald" id="startShoppingBtn">Explore Aisles</button>
+      </div>
+
+      <div class="cart-footer" id="cartFooter">
+        <div class="coupon-box">
+          <input type="text" id="couponInput" placeholder="Enter coupon (e.g. BLINK10)">
+          <button id="applyCouponBtn" style="background:var(--grocery-primary);">Apply</button>
+        </div>
+        <div class="coupon-feedback" id="couponFeedback" style="display: none;"></div>
+
+        <div class="bill-breakdown">
+          <div class="bill-row">
+            <span>Item Total</span>
+            <span id="billItemTotal">₹0</span>
+          </div>
+          <div class="bill-row" id="discountRow" style="display: none;">
+            <span class="text-green">Promo Discount</span>
+            <span class="text-green" id="billDiscount">-₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>Delivery Partner Fee</span>
+            <span id="billDeliveryFee">₹25</span>
+          </div>
+          <div class="bill-row">
+            <span>Govt Taxes &amp; Packing</span>
+            <span id="billTaxes">₹15</span>
+          </div>
+          <div class="bill-row total-row">
+            <strong>To Pay</strong>
+            <strong class="grand-total" id="billGrandTotal">₹0</strong>
+          </div>
+        </div>
+
+        <button class="btn btn-emerald btn-checkout" id="proceedCheckoutBtn">
+          <span>Proceed to Checkout</span>
+          <span id="checkoutBtnAmount">₹0</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkoutModalOverlay" aria-hidden="true">
+    <div class="modal-container checkout-modal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeCheckoutModalBtn" aria-label="Close">✕</button>
+      <div class="checkout-header">
+        <h2>Confirm 10-Min Delivery &amp; Pay</h2>
+        <p>Select delivery address and payment method</p>
+      </div>
+      <div class="checkout-sections">
+        <div class="checkout-card">
+          <div class="checkout-card-header">
+            <span class="icon">📍</span>
+            <h4>Delivery Address</h4>
+          </div>
+          <div class="address-preview">
+            <strong>Home (Cyber City)</strong>
+            <p>Flat 402, Block C, DLF Phase 2, Gurugram, 122002</p>
+            <span class="address-time-badge">⚡ 10-Minute Rocket Route</span>
+          </div>
+        </div>
+
+        <div class="checkout-card">
+          <div class="checkout-card-header">
+            <span class="icon">💳</span>
+            <h4>Choose Payment Method</h4>
+          </div>
+          <div class="payment-options-grid">
+            <label class="pay-option selected">
+              <input type="radio" name="paymentMethod" value="upi" checked>
+              <div class="pay-info">
+                <span class="pay-icon">📱</span>
+                <div>
+                  <strong>UPI (Google Pay, PhonePe, Paytm)</strong>
+                  <span class="pay-sub">Fastest instant verification</span>
+                </div>
+              </div>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="paymentMethod" value="card">
+              <div class="pay-info">
+                <span class="pay-icon">💳</span>
+                <div>
+                  <strong>Credit / Debit Card</strong>
+                  <span class="pay-sub">Visa, Mastercard, RuPay</span>
+                </div>
+              </div>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="paymentMethod" value="cod">
+              <div class="pay-info">
+                <span class="pay-icon">💵</span>
+                <div>
+                  <strong>Cash on Delivery</strong>
+                  <span class="pay-sub">Pay at doorstep</span>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="rider-tip-card">
+          <div class="tip-header">
+            <span>🛵 Support your 10-min rider:</span>
+          </div>
+          <div class="tip-pills">
+            <button class="tip-pill" data-tip="0">No Tip</button>
+            <button class="tip-pill active" data-tip="20">₹20</button>
+            <button class="tip-pill" data-tip="30">₹30</button>
+            <button class="tip-pill" data-tip="50">₹50 🌟</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-footer">
+        <div class="checkout-total-calc">
+          <span>Total Payable</span>
+          <strong id="checkoutFinalAmount">₹0</strong>
+        </div>
+        <button class="btn btn-emerald btn-pay-now" id="payNowBtn">
+          <span>Place 10-Min Order</span>
+          <span class="lock-icon">🔒</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Tracking Modal -->
+  <div class="modal-overlay" id="trackingModalOverlay" aria-hidden="true">
+    <div class="modal-container tracking-modal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeTrackingModalBtn">✕</button>
+      <div class="tracking-top-bar" style="background: linear-gradient(135deg, #064E3B 0%, #0F172A 100%);">
+        <div class="pulse-indicator">
+          <span class="pulse-ring"></span>
+          <span class="pulse-core"></span>
+        </div>
+        <div>
+          <span class="order-id-txt" id="trackOrderId">Order #QB-84920</span>
+          <h3 class="track-status-heading" id="trackStatusHeading">Dark Store Packing Your Basket!</h3>
+        </div>
+        <div class="track-eta-box">
+          <span class="eta-label">Arriving in</span>
+          <span class="eta-time" id="trackEtaTimer">10 mins</span>
+        </div>
+      </div>
+
+      <div class="map-simulation-container">
+        <div class="map-grid-bg"></div>
+        <div class="route-line-wrap">
+          <div class="route-path"></div>
+          <div class="rider-marker" id="riderMarker">
+            <div class="rider-avatar">🛵</div>
+            <div class="rider-tooltip">Rahul (Delivery Partner)</div>
+          </div>
+          <div class="destination-marker">
+            <div class="dest-avatar">🏠</div>
+            <div class="dest-tooltip">Your Home</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tracking-steps">
+        <div class="step-item completed" id="step1">
+          <div class="step-circle">✓</div>
+          <div class="step-desc"><strong>Order Placed</strong></div>
+        </div>
+        <div class="step-item active" id="step2">
+          <div class="step-circle" style="background:var(--grocery-primary);">📦</div>
+          <div class="step-desc"><strong>Dark Store Packing</strong></div>
+        </div>
+        <div class="step-item" id="step3">
+          <div class="step-circle">🛵</div>
+          <div class="step-desc"><strong>Rider Speeding</strong></div>
+        </div>
+        <div class="step-item" id="step4">
+          <div class="step-circle">🎉</div>
+          <div class="step-desc"><strong>Delivered in 10m</strong></div>
+        </div>
+      </div>
+
+      <div class="rider-info-card">
+        <div class="rider-avatar-img">⚡</div>
+        <div class="rider-meta">
+          <strong>Rahul Sharma</strong>
+          <span>QuickBite 10-Min Express Rider • ⭐ 4.9 (1,240+ deliveries)</span>
+          <span class="rider-tag">Carrying Insulated Dark Store Cooler Box</span>
+        </div>
+        <div class="rider-actions">
+          <button class="call-rider-btn" id="callRiderBtn">📞 Call</button>
+        </div>
+      </div>
+
+      <div class="tracking-footer">
+        <button class="btn btn-secondary" id="helpWithOrderBtn">🤖 Missing or Spoiled Item? Ask AI</button>
+        <button class="btn btn-emerald" id="trackDoneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QuickBot AI Chatbot -->
+  <div class="chatbot-wrapper">
+    <button class="chatbot-floating-trigger" id="chatbotTrigger" aria-label="Open QuickBot AI Assistant">
+      <div class="bot-badge-ring"></div>
+      <span class="bot-emoji">🤖</span>
+      <span class="bot-label">QuickBot AI</span>
+      <span class="bot-online-dot"></span>
+    </button>
+
+    <div class="chatbot-window" id="chatbotWindow" aria-hidden="true">
+      <div class="chat-header">
+        <div class="chat-bot-profile">
+          <div class="chat-bot-avatar">🤖</div>
+          <div class="chat-bot-info">
+            <h4>QuickBot AI (Grocery Support)</h4>
+            <span class="chat-status"><span class="status-dot"></span> Online • 24x7 Assistance</span>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <button class="chat-btn-action" id="resetChatBtn">🔄</button>
+          <button class="chat-btn-action" id="closeChatBtn">✕</button>
+        </div>
+      </div>
+
+      <div class="chat-quick-topics">
+        <span class="topic-hint">Tap for instant help:</span>
+        <div class="topic-chips-scroll">
+          <button class="topic-chip" data-query="Payment failed but money deducted">💳 Payment Issue</button>
+          <button class="topic-chip" data-query="Where is my 10-min grocery order?">🛵 Track 10-Min Order</button>
+          <button class="topic-chip" data-query="Missing milk pouch or spoiled tomatoes">🥑 Missing / Damaged Item</button>
+          <button class="topic-chip" data-query="How to claim refund to my account?">💸 Refund Status</button>
+          <button class="topic-chip" data-query="Suggest evening munchies and snacks">🍿 Snacks Suggestion</button>
+        </div>
+      </div>
+
+      <div class="chat-messages-container" id="chatMessages"></div>
+
+      <form class="chat-input-form" id="chatInputForm">
+        <input type="text" id="chatTextInput" placeholder="Ask about payments, milk, veggies, refunds, order..." autocomplete="off">
+        <button type="submit" class="chat-send-btn" id="chatSendBtn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Location Modal -->
+  <div class="modal-overlay" id="locationModalOverlay" aria-hidden="true">
+    <div class="modal-container location-modal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeLocationModalBtn">✕</button>
+      <h3>Select Delivery Location</h3>
+      <p class="loc-modal-sub">Choose a saved address or enter a new one</p>
+      <div class="saved-addresses-list">
+        <div class="address-card-select active" data-name="Home - Cyber City" data-sub="Tower 4, Sector 28, Gurugram">
+          <span class="icon">🏠</span>
+          <div><strong>Home</strong><p>Tower 4, Sector 28, DLF Cyber City, Gurugram</p></div>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="address-card-select" data-name="Work - WeWork Forum" data-sub="Floor 5, DLF CyberHub, Gurugram">
+          <span class="icon">💼</span>
+          <div><strong>Office / Work</strong><p>Floor 5, WeWork Forum, DLF CyberHub, Gurugram</p></div>
+          <span class="check-mark">✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
